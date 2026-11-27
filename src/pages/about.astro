@@ -1,45 +1,33 @@
 ---
-import AboutLayout from "@/layouts/AboutLayout.astro";
+import { getEntry, render } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import Main from "@/components/Main.astro";
+import Footer from "@/components/Footer.astro";
+import config from "@/config";
+
+const about = await getEntry("pages", "about");
+
+if (!about) {
+  throw new Error(
+    "Missing content entry: `about.md` or `about.mdx` in `src/content/pages/`"
+  );
+}
+
+const { Content } = await render(about);
 ---
 
-<AboutLayout frontmatter={{ title: "About" }}>
-  <p>
-    Hi, I'm <strong>Vamshik</strong> — a 20-year-old developer with a strong passion for technology. Outside academics, I love exploring history, following football, and reading great books.
-  </p>
-
-  <h2>Education</h2>
-  <ul>
-    <li>
-      <strong>Vidyavardhaka College Of Engineering</strong> <em>(2024 – 2028)</em><br />
-      B.Tech in Artificial Intelligence &amp; Machine Learning
-    </li>
-  </ul>
-
-  <h2>Skills</h2>
-  <p>
-    <code>React</code> &middot; <code>Next.js</code> &middot; <code>TypeScript</code> &middot; <code>Node.js</code> &middot; <code>Python</code> &middot; <code>C++</code>
-  </p>
-
-  <h2>Projects</h2>
-  <h3>ResearchPlex <em>(Sep 2025 – Present)</em></h3>
-  <p>
-    AI Research Assistant built using the Perplexity API.<br />
-    <strong>Tech Stack:</strong> React, JavaScript, Node.js, Vite, TailwindCSS<br />
-    <strong>Source Code:</strong>{" "}
-    <a href={"https://" + "://github.com"} target="_blank" rel="noopener noreferrer">
-      View on GitHub
-    </a>
-  </p>
-
-  <h2>Get in Touch</h2>
-  <p>
-    Say hello on{" "}
-    <a href={"https://" + "://x.com"} target="_blank" rel="noopener noreferrer">
-      X (@Vamshiktwt)
-    </a>{" "}
-    and I'll respond whenever I can, or check out my main portfolio at{" "}
-    <a href={"https://" + "vamshiktwt.vercel.app"} target="_blank" rel="noopener noreferrer">
-      vamshiktwt.vercel.app
-    </a>.
-  </p>
-</AboutLayout>
+<Layout
+  title={`${about.data.title} | ${config.site.title}`}
+  description={about.data.description}
+  ogImage={about.data.ogImage}
+  canonicalURL={about.data.canonicalURL}
+>
+  <Header />
+  <Breadcrumb />
+  <Main pageTitle={about.data.title} class="app-prose">
+    <Content />
+  </Main>
+  <Footer />
+</Layout>
