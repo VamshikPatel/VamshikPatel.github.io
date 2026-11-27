@@ -1,8 +1,8 @@
 import { defineAstroPaperConfig } from "./src/types/config";
 
 export default defineAstroPaperConfig({
-    site: {
-    url: "https://vamshikpatel.github.io",
+  site: {
+    url: "https://vamshikpatel.github.io/",
     title: "Vamshik Patel",
     description: "20-year-old B.Tech AI & ML student passionate about technology, history, football, and books.",
     author: "Vamshik Patel",
